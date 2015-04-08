@@ -1,0 +1,14 @@
+body {
+	background-color: #cc0033;
+}
+aside{
+	background-color: white;
+	display: inline-block;
+	float: right;
+	text-align: center;
+}
+footer{
+	background-color: white;
+	display: inline-block;
+	vertical-align: bottom;
+}

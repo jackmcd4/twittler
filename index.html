@@ -3,25 +3,54 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+    <meta charset="utf-8">
+    <title>Twittler</title>
   </head>
+ 
   <body>
+    <h1>Twittler</h1>
+    <p>Welcome to Twittler! Check out your feed:</p>
     <script>
-
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
-
+       // $body.html('');
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" +new Date() + ")").appendTo($body);//should show correct time
           index -= 1;
         }
-
+      var $aside = $('aside');
+     // $aside.html('');
+      var $ul = $('aside ul')
+      $('button').on('click', function(){//should toggle between showing on click
+       for(var i=0; i<users.length; i++){
+          var tweetUser = users;
+          var $tweetUser = $('<button></button>');
+          $tweetUser.text('@' + tweetUser[i]).appendTo($aside);//should add a link to the users tweets
+          $('button').on('click', function(){
+            $body.html('');
+            for(var j=0; j<users[i].length; j++){
+              var $usersTweet=$('<div></div>');
+              $usersTweet.text('@' + tweetUser[i] + ': ' + users[i][j]).appendTo($body);
+            }
+          })
+        }
       });
-
-    </script>
+      });
+      
+      //title to click/show other twittlers
+      //lists other twittlers on click
+      
+      </script>
+      <aside>
+      <h3>Users</h3>
+      <button>Your Twittlers</button>
+        <ul>
+        </ul>
+    </aside>
+    </section>
   </body>
 </html>
