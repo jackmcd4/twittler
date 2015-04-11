@@ -7,6 +7,9 @@ aside{
 	float: right;
 	text-align: center;
 }
+ul{
+	display: none;
+}
 footer{
 	background-color: white;
 	display: inline-block;

@@ -10,36 +10,105 @@
  
   <body>
     <h1>Twittler</h1>
-    <p>Welcome to Twittler! Check out your feed:</p>
+    <p>Welcome to Twittler!
+    <p id="userNamePrompt" class="bold">What's your username @ </p>
+    <input id='inputField' type='text'></input>
+     Check out your feed:</p>
+   
     <script>
       $(document).ready(function(){
         var $body = $('body');
+        var $section = $('section');
+        var timeStamp;
        // $body.html('');
         var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" +new Date() + ")").appendTo($body);//should show correct time
+        var current = index;
+        var timedFeed = function(){
+          
+        var tweet = streams.home[index];
+        var $tweet = $('<div></div>');
+        $tweet.text('@' + tweet.user + ': ' + tweet.message +" "+ timeSince(tweet.created_at)).appendTo($section);//should show correct time
           index -= 1;
+          if(index>=current){
+            timedFeed();
         }
+        }
+      
+      setInterval(timedFeed, 500);
       var $aside = $('aside');
      // $aside.html('');
-      var $ul = $('aside ul')
-      $('button').on('click', function(){//should toggle between showing on click
-       for(var i=0; i<users.length; i++){
-          var tweetUser = users;
-          var $tweetUser = $('<button></button>');
-          $tweetUser.text('@' + tweetUser[i]).appendTo($aside);//should add a link to the users tweets
-          $('button').on('click', function(){
-            $body.html('');
-            for(var j=0; j<users[i].length; j++){
-              var $usersTweet=$('<div></div>');
-              $usersTweet.text('@' + tweetUser[i] + ': ' + users[i][j]).appendTo($body);
-            }
-          })
+     // var $ul = $('aside ul')
+      //var ran = false;
+     // $('.list').on('click', function(){//should toggle between showing on click
+       //$('li').slideToggle();
+        //if(ran===false){
+          for(var i=0; i<users.length; i++){
+            var tweetUser = users;
+            var $tweetUser = $('<div class= alpha'+i+'></div>');
+            $tweetUser.text(tweetUser[i]).appendTo($aside);
+          } 
+         // ran=true;
+        
+     // });
+      $('.alpha0').on('click', function(e){
+        //var $here = $('<div>"Hello"</div>').appendTo($body);
+        $section.html('');
+        var names = $(e.target);
+        var person = streams.users.shawndrost;
+        for(var i=0; i<person.length; i++){
+          var tweet = person[i];
+          var $tweet = $('<div></div>');
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" +new Date() + ")").appendTo($section);
         }
       });
+       $('.alpha1').on('click', function(){
+        //var $here = $('<div>"Hello"</div>').appendTo($body);
+        $section.html('');
+        var person = streams.users.sharksforcheap;
+        for(var i=0; i<person.length; i++){
+          var tweet = person[i];
+          var $tweet = $('<div></div>');
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" +new Date() + ")").appendTo($section);
+        }
+      }); $('.alpha2').on('click', function(){
+        //var $here = $('<div>"Hello"</div>').appendTo($body);
+        $section.html('');
+        var person = streams.users.mracus;
+        for(var i=0; i<person.length; i++){
+          var tweet = person[i];
+          var $tweet = $('<div></div>');
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" +new Date() + ")").appendTo($section);
+        }
+      }); $('.alpha3').on('click', function(){
+        //var $here = $('<div>"Hello"</div>').appendTo($body);
+        $section.html('');
+        var person = streams.users.douglascalhoun;
+        for(var i=0; i<person.length; i++){
+          var tweet = person[i];
+          var $tweet = $('<div></div>');
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + timeSince()).appendTo($section);
+        }
       });
+    function timeSince(timeStamp) {//want to exchange for moment.js in future
+    var now = new Date(),
+      secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
+    if(secondsPast < 60){
+      return '('+ parseInt(secondsPast) + ' seconds ago)';
+    }
+    if(secondsPast < 3600){
+      return '('+parseInt(secondsPast/60) + ' minutes ago)';
+    }
+    if(secondsPast <= 86400){
+      return '('+parseInt(secondsPast/3600) + ' hours ago)';
+    }
+    if(secondsPast > 86400){
+        day = timeStamp.getDate();
+        month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ","");
+        year = timeStamp.getFullYear() == now.getFullYear() ? "" :  " "+timeStamp.getFullYear();
+        return day + " " + month + year;
+    }
+  }
+     });
       
       //title to click/show other twittlers
       //lists other twittlers on click
@@ -47,10 +116,9 @@
       </script>
       <aside>
       <h3>Users</h3>
-      <button>Your Twittlers</button>
-        <ul>
-        </ul>
+      <!--button class="list">Your Twittlers</button-->
     </aside>
-    </section>
+      <section>
+     </section>
   </body>
 </html>
