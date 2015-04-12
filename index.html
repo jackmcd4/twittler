@@ -9,33 +9,67 @@
   </head>
  
   <body>
-    <h1>Twittler</h1>
-    <p>Welcome to Twittler!
+    <h1 class= "title">Twittler</h1>
+    <p>Welcome to Twittler!</p>
     <p id="userNamePrompt" class="bold">What's your username @ </p>
     <input id='inputField' type='text'></input>
-     Check out your feed:</p>
-   
+     <p id="listLength">Display 
+            <select>
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="50">50</option>
+              <option value="all">All</option>
+            </select> Most Recent Tweets
+          </p>
+    <p>Check out or <button class="title">update</button> your feed:</p>
+
     <script>
       $(document).ready(function(){
         var $body = $('body');
         var $section = $('section');
         var timeStamp;
        // $body.html('');
+      
+
+
+       var feed = function(){//first instant feed
+        $section.html('');
         var index = streams.home.length - 1;
-        var current = index;
-        var timedFeed = function(){
-          
+        var feedLength=0;
+        while(0<=index){
         var tweet = streams.home[index];
         var $tweet = $('<div></div>');
         $tweet.text('@' + tweet.user + ': ' + tweet.message +" "+ timeSince(tweet.created_at)).appendTo($section);//should show correct time
-          index -= 1;
-          if(index>=current){
-            timedFeed();
+          index--;
+          feedLength++;
         }
+      }
+      feed();
+
+
+     $(".title").on('click', function(){//should refresh page adding new tweets
+          $section.html('');
+          var index = streams.home.length - 1;
+        var feedLength=0;
+        var len = $('#listLength').find('select').val();
+        if(len>index || len==='all'){
+          len=index;
         }
-      
-      setInterval(timedFeed, 500);
-      var $aside = $('aside');
+        while(feedLength<=len){
+        var tweet = streams.home[index];
+        var $tweet = $('<div></div>');
+        $tweet.text('@' + tweet.user + ': ' + tweet.message +" "+ timeSince(tweet.created_at)).appendTo($section);//should show correct time
+          index--;
+          feedLength++;
+        }
+     })
+
+
+
+
+      var $aside = $('aside');//Menu sidebar with Users
      // $aside.html('');
      // var $ul = $('aside ul')
       //var ran = false;
@@ -55,38 +89,38 @@
         $section.html('');
         var names = $(e.target);
         var person = streams.users.shawndrost;
-        for(var i=0; i<person.length; i++){
+        for(var i=person.length-1; i>=0; i--){
           var tweet = person[i];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" +new Date() + ")").appendTo($section);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " "+ timeSince(tweet.created_at)).appendTo($section);
         }
       });
        $('.alpha1').on('click', function(){
         //var $here = $('<div>"Hello"</div>').appendTo($body);
         $section.html('');
         var person = streams.users.sharksforcheap;
-        for(var i=0; i<person.length; i++){
+        for(var i=person.length-1; i>=0; i--){
           var tweet = person[i];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" +new Date() + ")").appendTo($section);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " "+ timeSince(tweet.created_at)).appendTo($section);
         }
       }); $('.alpha2').on('click', function(){
         //var $here = $('<div>"Hello"</div>').appendTo($body);
         $section.html('');
         var person = streams.users.mracus;
-        for(var i=0; i<person.length; i++){
+        for(var i=person.length-1; i>=0; i--){
           var tweet = person[i];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + " (" +new Date() + ")").appendTo($section);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message +" "+ timeSince(tweet.created_at)).appendTo($section);
         }
       }); $('.alpha3').on('click', function(){
         //var $here = $('<div>"Hello"</div>').appendTo($body);
         $section.html('');
         var person = streams.users.douglascalhoun;
-        for(var i=0; i<person.length; i++){
+        for(var i=person.length-1; i>=0; i--){
           var tweet = person[i];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + timeSince()).appendTo($section);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " "+ timeSince(tweet.created_at)).appendTo($section);
         }
       });
     function timeSince(timeStamp) {//want to exchange for moment.js in future
