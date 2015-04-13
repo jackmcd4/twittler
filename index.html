@@ -9,10 +9,47 @@
   </head>
  
   <body>
+    <p class='form'>Type Username to Enter:</p>
+    <form class ='form' action='#' id='login'>
+    <div>
+      <label>@<label>
+    <input type="text">
+    <input type="submit">
+   </div>
+    </form>
+    <span></span>
+  
+    <script>
+      $( "form" ).submit(function( event ) {
+        if($("input:first").val()==""){
+          $( "span" ).text( "Try Typing!" ).show().fadeOut( 1000 );
+  event.preventDefault();
+        return;
+        }
+    if ( $( "input:first" ).val() != "shawndrost" && $( "input:first" ).val() != 'sharksforcheap' && $( "input:first" ).val() != 'douglascalhoun' && $( "input:first" ).val() != 'mracus'  ) {
+      $('.form').addClass('hidden');
+      $('header').show(1000);
+      $('section').fadeIn(1500);
+      $('aside').fadeIn(2000);
+      $( "input" )
+          .keyup(function() {
+           var value = $( this ).val();
+          })
+      .keyup();
+      return;
+    
+  }
+ else{
+  $( "span" ).text( "Already Taken!" ).show().fadeOut( 1000 );
+  event.preventDefault();
+}
+});
+</script>
+
+
+<header>
     <h1 class= "title">Twittler</h1>
-    <p>Welcome to Twittler!</p>
-    <p id="userNamePrompt" class="bold">What's your username @ </p>
-    <input id='inputField' type='text'></input>
+    <h2>Welcome to Twittler!</h2>
      <p id="listLength">Display 
             <select>
               <option value="5">5</option>
@@ -23,15 +60,15 @@
               <option value="all">All</option>
             </select> Most Recent Tweets
           </p>
-    <p>Check out or <button class="title">update</button> your feed:</p>
-
+    <h3>Check out or <u class="title">update</u> your feed:</h3>
+</header>
     <script>
       $(document).ready(function(){
+
         var $body = $('body');
         var $section = $('section');
         var timeStamp;
        // $body.html('');
-      
 
 
        var feed = function(){//first instant feed
@@ -82,44 +119,51 @@
             $tweetUser.text(tweetUser[i]).appendTo($aside);
           } 
          // ran=true;
-        
      // });
+      //Want to only have one that references 'this' or button w/class of this
       $('.alpha0').on('click', function(e){
-        //var $here = $('<div>"Hello"</div>').appendTo($body);
         $section.html('');
-        var names = $(e.target);
         var person = streams.users.shawndrost;
         for(var i=person.length-1; i>=0; i--){
           var tweet = person[i];
           var $tweet = $('<div></div>');
+               if(i==person.length-1){
+              $tweet.addClass('firstTweet');
+          }
           $tweet.text('@' + tweet.user + ': ' + tweet.message + " "+ timeSince(tweet.created_at)).appendTo($section);
         }
       });
        $('.alpha1').on('click', function(){
-        //var $here = $('<div>"Hello"</div>').appendTo($body);
         $section.html('');
         var person = streams.users.sharksforcheap;
         for(var i=person.length-1; i>=0; i--){
           var tweet = person[i];
           var $tweet = $('<div></div>');
+           if(i==person.length-1){
+              $tweet.addClass('firstTweet');
+          }
           $tweet.text('@' + tweet.user + ': ' + tweet.message + " "+ timeSince(tweet.created_at)).appendTo($section);
         }
       }); $('.alpha2').on('click', function(){
-        //var $here = $('<div>"Hello"</div>').appendTo($body);
         $section.html('');
         var person = streams.users.mracus;
         for(var i=person.length-1; i>=0; i--){
           var tweet = person[i];
           var $tweet = $('<div></div>');
+           if(i==person.length-1){
+              $tweet.addClass('firstTweet');
+          }
           $tweet.text('@' + tweet.user + ': ' + tweet.message +" "+ timeSince(tweet.created_at)).appendTo($section);
         }
       }); $('.alpha3').on('click', function(){
-        //var $here = $('<div>"Hello"</div>').appendTo($body);
         $section.html('');
         var person = streams.users.douglascalhoun;
         for(var i=person.length-1; i>=0; i--){
           var tweet = person[i];
           var $tweet = $('<div></div>');
+           if(i==person.length-1){
+              $tweet.addClass('firstTweet');
+          }
           $tweet.text('@' + tweet.user + ': ' + tweet.message + " "+ timeSince(tweet.created_at)).appendTo($section);
         }
       });
