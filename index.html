@@ -19,29 +19,7 @@
     </form>
     <span></span>
   
-    <script>
-      $( "form" ).submit(function( event ) {
-        if($("input:first").val()==""){
-          $( "span" ).text( "Try Typing!" ).show().fadeOut( 1000 );
-  event.preventDefault();
-        return;
-        }
-    if ( $( "input:first" ).val() != "shawndrost" && $( "input:first" ).val() != 'sharksforcheap' && $( "input:first" ).val() != 'douglascalhoun' && $( "input:first" ).val() != 'mracus'  ) {
-      $('.form').addClass('hidden');
-      $('header').show(1000);
-      $('section').fadeIn(1500);
-      $('aside').fadeIn(2000);
-      return;
-  }
- else{
-  $( "span" ).text( "Already Taken!" ).show().fadeOut( 1000 );
-  event.preventDefault();
-}
-});
-</script>
-
-
-<header>
+  <header>
     <h1 class= "title">Twittler</h1>
     <h2>Welcome to Twittler!</h2>
      <p id="listLength">Display 
@@ -55,15 +33,59 @@
             </select> Most Recent Tweets
           </p>
     <h3>Check out or <u class="title">update</u> your feed:</h3>
+    
+  <form name = 'visitor_tweet' class ='visitor_tweet' action='#' id='visits'>
+    <div>
+    <label>Add your own tweet:</label>
+    <input type="text">
+    <input type="submit">
+   </div>
+    </form>
+  <p></p>
 </header>
     <script>
+      
+      $( ".form" ).submit(function( event ) {
+        if($("input:first").val()==""){
+          $( "span" ).text( "Try Typing!" ).show().fadeOut( 2000 );
+  event.preventDefault();
+        return;
+        }
+    if ( $( "input:first" ).val() != "shawndrost" && $( "input:first" ).val() != 'sharksforcheap' && $( "input:first" ).val() != 'douglascalhoun' && $( "input:first" ).val() != 'mracus'  ) {
+      $('.form').addClass('hidden');
+      $('header').fadeIn(1500);
+      $('section').fadeIn(1500);
+      $('aside').fadeIn(2000);
+       visitor = $( "input:first" ).val();
+      $('<span class=visit></span>').text(visitor).appendTo('aside');
+      return;
+  }
+ else{
+  $( "span" ).text( "Already Taken!" ).show().fadeOut( 2000 );
+  event.preventDefault();
+}
+});
       $(document).ready(function(){
 
+       streams.users.visitor = [];
+      $('.visitor_tweet').submit(function(event){
+        if($("input").val()==""){
+          $( "p" ).text( "Try Typing!" ).show().fadeOut( 2000 );
+          event.preventDefault();
+        return;
+        }
+        else{
+          var values = $(this);
+          writeTweet(values);
+          var $tweet = $('<div></div>');
+          $tweet.text('@' + tweet.user + ': ' + tweet.message +" "+ timeSince(tweet.created_at)).appendTo($section);//
+        }
+        return;
+      });
         var $body = $('body');
         var $section = $('section');
         var timeStamp;
        // $body.html('');
-
 
        var feed = function(){//first instant feed
         $section.html('');
@@ -101,19 +123,13 @@
 
 
       var $aside = $('aside');//Menu sidebar with Users
-     // $aside.html('');
-     // var $ul = $('aside ul')
-      //var ran = false;
-     // $('.list').on('click', function(){//should toggle between showing on click
-       //$('li').slideToggle();
-        //if(ran===false){
+
           for(var i=0; i<users.length; i++){
             var tweetUser = users;
             var $tweetUser = $('<div class= alpha'+i+'></div>');
             $tweetUser.text(tweetUser[i]).appendTo($aside);
           } 
-         // ran=true;
-     // });
+          
       //Want to only have one that references 'this' or button w/class of this
       $('.alpha0').on('click', function(e){
         $section.html('');
@@ -159,6 +175,16 @@
               $tweet.addClass('firstTweet');
           }
           $tweet.text('@' + tweet.user + ': ' + tweet.message + " "+ timeSince(tweet.created_at)).appendTo($section);
+        }
+      });
+      $('.visit').on('click', function(){
+        $section.html('');
+        for(var i=visitorTweets.length-1; i>=0; i--){
+          var $tweet = $('<div></div>');
+           if(i==visitorTweets.length-1){
+              $tweet.addClass('firstTweet');
+          }
+          $tweet.text('@' + visitor + ': ' + tweet.message + " "+ timeSince(tweet.created_at)).appendTo($section);
         }
       });
     function timeSince(timeStamp) {//want to exchange for moment.js in future

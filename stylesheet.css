@@ -9,7 +9,7 @@ aside{
 	top: 0;
 	right: 0;
 	text-align: center;
-	font-size: 1.55em;
+	font-size: 1.25em;
 }
 ul{
 	display: none;
@@ -28,5 +28,6 @@ footer{
 header, section, aside{
 	display: none;
 }
-.form { 
+label { 
+	font-size: 1.25em;
 }
